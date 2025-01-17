@@ -6,7 +6,8 @@ tail -n +2 "${__zcg_dir}/generators.csv" | while IFS=$',' read -r cli print_cmd;
   local generated="${__zcg_dir}/_${cli}";
 
   # find command executable
-  local cmd_path="$(command -v "$cli" | xargs type -p | xargs realpath 2> /dev/null)"
+  # local cmd_path="$(command -v "$cli" | xargs type -p | xargs realpath 2> /dev/null)"
+  local cmd_path="$(type -p "$(command -v "$cli")" 2>/dev/null | xargs realpath 2>/dev/null)"
 
   # skip if command isn't installed
   [[ -z "$cmd_path" ]] && continue
